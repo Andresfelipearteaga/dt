@@ -1,22 +1,14 @@
-import { useState } from 'react';
 import { Container, Row, Col, Card, Badge } from 'react-bootstrap';
-import { Play, BarChart2, Brain, RefreshCw } from 'lucide-react';
+import { Play, BarChart2, Brain } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 // import backgroundImage from '../assets/bg.jpg';
 // import title from '../assets/title.png';
 import logo from '../assets/logo.png';
 import '../index.css';
 
-import ImageSliderCSVUploader from '../components/Modal/UpdatedDataset';
 
 const DigitalTwinLanding = () => {
   const navigate = useNavigate();
-  const [showModal, setShowModal] = useState(false);
-
-  const handleCloseModal = () => {
-    console.log('El modal se cerró desde el componente hijo');
-    setShowModal(false);
-  };
 
   const Nav = () => {
     navigate('/dashboard');
@@ -58,7 +50,7 @@ const DigitalTwinLanding = () => {
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <button className='bt'
           onClick={Nav}
-          > <Play className="icon hidden"/>
+          > 
           Comenzar
           </button>
 {/* 

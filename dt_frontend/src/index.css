@@ -85,3 +85,78 @@
     display: inline-block;
     transition: opacity 5s ease;
   }
+
+
+  @keyframes bloom {
+    0% {
+      background-color: transparent;
+      color: white;
+
+    }
+    50% {
+      color:rgba(0, 90, 155, 0.75);
+    }
+    100% {
+      background-color: transparent;
+      color:rgba(0, 90, 155, 0.75);
+
+    }
+  }
+  
+  .bloom-effect {
+    animation: bloom 1s ease-out;
+    color:rgba(0, 90, 155, 0.75);
+
+  }
+
+  .tab-whatif {
+    color: rgba(0, 0, 0, 0.63);
+  }
+  
+  .disabled {
+    cursor: not-allowed;
+  }
+  
+  .enabled {
+    cursor: pointer;
+  }
+
+  /* Estilos del tour */
+  .tour-overlay {
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.85);
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    z-index: 1000;
+  }
+  
+  .tour-message {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+  .tour-pointer {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid white;
+    margin: auto;
+  }
+  
+  .tour-close {
+    background: red;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  

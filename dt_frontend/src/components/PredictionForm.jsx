@@ -1,144 +1,247 @@
-// Componente de formulario de predicción
-
-import { Form, Button } from 'react-bootstrap';
-import { useState } from 'react';
-import PropTypes from 'prop-types'
-
+import { Button, Form } from "react-bootstrap";
+import { useState } from "react";
+import PropTypes from "prop-types";
 
 const PredictionForm = ({ onPredict, newPrediction }) => {
-  const [age, setAge] = useState('');
-  const [gender, setGender] = useState('');
-  const [attendance, setAttendance] = useState('');
-  const [submitted, setSubmitted ] = useState('');
-  const [studyHours, setStudyHours] = useState('');
-  const [studyHoursOnline, setStudyHoursOnline] = useState('');
-  const [disabled, setDisabled] = useState(false)
- 
+  const [predictionData, setPredictionData] = useState({
+    age: "",
+    gender: "",
+    attendance: "",
+    submitted: "",
+    studyHours: "",
+    studyHoursOnline: "",
+  });
+
+  const [inputData, setInputData] = useState({
+    totalSubmitted: "",
+    totalStudyHours: "",
+    totalOnlineStudyHours: "",
+  });
+
+  const [disabled, setDisabled] = useState(false);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setPredictionData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setInputData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    onPredict(age, gender, attendance, submitted, studyHours, studyHoursOnline);
-    setDisabled(true)
+    onPredict(predictionData, inputData);
+    setDisabled(true);
   };
 
   const handleNewPrediction = () => {
     newPrediction(true);
-    setDisabled(false)
-    setAttendance('');
-    setSubmitted('');
-    setStudyHours('');
-    setStudyHoursOnline('');
-    setAge('');
-    setGender('');
-  }
+    setDisabled(false);
+    setPredictionData({
+      age: "",
+      gender: "",
+      attendance: "",
+      submitted: "",
+      studyHours: "",
+      studyHoursOnline: "",
+    });
+    setInputData({
+      totalSubmitted: "",
+      totalStudyHours: "",
+      totalOnlineStudyHours: "",
+    });
+  };
 
-  const style = `
-  input {
-    width: 50px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    padding-left: 5px;
-  
-  }
-  `
-
-  
-
+  const inputStyle = {
+    borderRadius: "8px",
+    border: "1px solid #ccc",
+    padding: "8px 12px",
+    fontSize: "14px",
+    transition: "0.3s",
+    width: "100%",
+  };
   return (
     <Form onSubmit={handleSubmit}>
-      <style>{style}</style>
       <Form.Group className="mb-3">
         <Form.Label>Edad</Form.Label>
         <Form.Control
           type="number"
-          value={age}
-          onChange={(e) => setAge(e.target.value)}
-          min="0"
+          name="age"
+          value={predictionData.age}
+          onChange={handleChange}
+          min={0}
           max="100"
           required
-          className="form-control-modern"
         />
       </Form.Group>
+
       <Form.Group className="mb-3">
         <Form.Label>Género</Form.Label>
         <Form.Select
-        value={gender}
-        onChange={(e) => setGender(e.target.value)}
-        required
-        className="form-control-modern"
-      >
-        <option value="" disabled>
-          Selecciona el género
-        </option>
-        <option value="0">Femenino</option>
-        <option value="1">Masculino</option>
-      </Form.Select>
+          name="gender"
+          value={predictionData.gender}
+          onChange={handleChange}
+          required
+        >
+          <option value="" disabled>Selecciona el género</option>
+          <option value="0">Femenino</option>
+          <option value="1">Masculino</option>
+        </Form.Select>
       </Form.Group>
+
       <Form.Group className="mb-3">
         <Form.Label>Asistencia (%)</Form.Label>
         <Form.Control
           type="number"
-          value={attendance}
-          onChange={(e) => setAttendance(e.target.value)}
-          min="0"
+          name="attendance"
+          value={predictionData.attendance}
+          onChange={handleChange}
+          min={0}
           max="100"
           required
-          className="form-control-modern"
         />
       </Form.Group>
+
+      {/* Campo de actividades enviadas */}
       <Form.Group className="mb-3">
-        <Form.Label>Actividades enviadas de <input className='input' maxLength={50} type="number" /></Form.Label>
+        <Form.Label>
+          Actividades enviadas de
+          <input
+            className="ms-2"
+            type="number"
+            name="totalSubmitted"
+            value={inputData.totalSubmitted}
+            onChange={handleInputChange}
+            max="50"
+            min={0}
+            style={{ ...inputStyle, width: "80px", marginLeft: "8px" }}
+            onKeyDown={(e) => e.preventDefault()}
+            onWheel={(e) => e.preventDefault()}
+          />
+          {!inputData.totalSubmitted && (
+            <span className="text-muted ms-2">
+              Escribe una cantidad para continuar
+            </span>
+          )}
+        </Form.Label>
         <Form.Control
           type="number"
-          value={submitted}
-          onChange={(e) => setSubmitted(e.target.value)}
-          min="0"
-          max="20"
+          name="submitted"
+          value={predictionData.submitted}
+          onChange={handleChange}
+          min={0}
+          max={inputData.totalSubmitted}
+          disabled={!inputData.totalSubmitted}
           required
-          className="form-control-modern"
+          onKeyDown={(e) => e.preventDefault()}
+          onWheel={(e) => e.preventDefault()}
         />
       </Form.Group>
+
+      {/* Campo de horas de estudio */}
       <Form.Group className="mb-3">
-        <Form.Label>Horas de estudio extracurricular de <input className='input' maxLength={50} type="number" /></Form.Label>
+        <Form.Label>
+          Horas de estudio extracurricular de
+          <input
+            className="ms-2"
+            type="number"
+            name="totalStudyHours"
+            value={inputData.totalStudyHours}
+            onChange={handleInputChange}
+            max="50"
+            min={0}
+            style={{ ...inputStyle, width: "80px", marginLeft: "8px" }}
+            onKeyDown={(e) => e.preventDefault()}
+            onWheel={(e) => e.preventDefault()}
+          />
+          {!inputData.totalStudyHours && (
+            <span className="text-muted ms-2">
+              Escribe una cantidad para continuar
+            </span>
+          )}
+        </Form.Label>
         <Form.Control
           type="number"
-          value={studyHours}
-          onChange={(e) => setStudyHours(e.target.value)}
-          min="0"
-          max="10"
+          name="studyHours"
+          value={predictionData.studyHours}
+          onChange={handleChange}
+          min={0}
+          max={inputData.totalStudyHours}
+          disabled={!inputData.totalStudyHours}
           required
-          className="form-control-modern"
+          onKeyDown={(e) => e.preventDefault()}
+          onWheel={(e) => e.preventDefault()}
         />
       </Form.Group>
+
+      {/* Campo de horas de estudio online */}
       <Form.Group className="mb-3">
-        <Form.Label>Horas de estudio con recursos online de <input className='input' maxLength={50} type="number" /></Form.Label>
+        <Form.Label>
+          Horas de estudio con recursos online de
+          <input
+            className="ms-2"
+            type="number"
+            name="totalOnlineStudyHours"
+            value={inputData.totalOnlineStudyHours}
+            onChange={handleInputChange}
+            max="20"
+            min={0}
+            style={{ ...inputStyle, width: "80px", marginLeft: "8px" }}
+            onKeyDown={(e) => e.preventDefault()}
+            onWheel={(e) => e.preventDefault()}
+          />
+          {!inputData.totalOnlineStudyHours && (
+            <span className="text-muted ms-2">
+              Escribe una cantidad para continuar
+            </span>
+          )}
+        </Form.Label>
         <Form.Control
           type="number"
-          value={studyHoursOnline}
-          onChange={(e) => setStudyHoursOnline(e.target.value)}
+          name="studyHoursOnline"
+          value={predictionData.studyHoursOnline}
+          onChange={handleChange}
           min="0"
-          max="10"
-          step="0.1"
+          max={inputData.totalOnlineStudyHours}
+          disabled={!inputData.totalOnlineStudyHours}
           required
-          className="form-control-modern"
+          onKeyDown={(e) => e.preventDefault()}
+          onWheel={(e) => e.preventDefault()}
         />
       </Form.Group>
-      <Button variant="primary" type="submit" className="w-100" disabled={disabled} >
-      {disabled ? 'Predicción realizada' : 'Predecir Rendimiento'}  
+
+      <Button variant="primary" type="submit" className="w-100">
+        {disabled ? "Predicción realizada" : "Predecir Rendimiento"}
       </Button>
-      <br />
-      <br />
-      { disabled && (<Button variant="success" type="submit" className="w-100" onClick={handleNewPrediction} >
-       Nueva Predicción  
-      </Button>
+
+      {disabled && (
+        <>
+          <br />
+          <br />
+          <Button
+            variant="success"
+            className="w-100"
+            onClick={handleNewPrediction}
+          >
+            Nueva Predicción
+          </Button>
+        </>
       )}
     </Form>
   );
 };
 
-export default PredictionForm;
-
 PredictionForm.propTypes = {
-    onPredict: PropTypes.func.isRequired,
-    newPrediction: PropTypes.func,
-  };
-PredictionForm.displayName = 'PredictionForm';
+  onPredict: PropTypes.func.isRequired,
+  newPrediction: PropTypes.func,
+};
+
+export default PredictionForm;

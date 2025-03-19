@@ -27,7 +27,7 @@ const RealtimeDataCard = ({ data }) => (
         
           <div className="d-flex justify-content-between align-items-center mb-2">
             <span>Actividades enviadas:</span>
-            <Badge bg="info" pill>{data.submitted}/20</Badge>
+            <Badge bg="info" pill>{data.submitted}</Badge>
           </div>
         
           <div className="d-flex justify-content-between align-items-center mb-2">
@@ -57,14 +57,13 @@ export default RealtimeDataCard;
 RealtimeDataCard.propTypes = {
     data: PropTypes.shape({
       attendance: PropTypes.number.isRequired,
-      hours: PropTypes.number.isRequired,
+      hours: PropTypes.string.isRequired,
       grades: PropTypes.number.isRequired,
-      submitted: PropTypes.number.isRequired,
-      hours_online: PropTypes.number.isRequired,
+      submitted: PropTypes.string.isRequired,
+      hours_online: PropTypes.string.isRequired,
       age: PropTypes.number.isRequired,
       gender: PropTypes.number.isRequired
-    }).isRequired,
-    selectedKPIs: PropTypes.arrayOf(PropTypes.string).isRequired,
+    }),
   };
 RealtimeDataCard.displayName = 'RealtimeDataCard';
   
