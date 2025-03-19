@@ -9,6 +9,7 @@ import PredictionForm from '../components//PredictionForm';
 import PreventiveActions from '../components/PreventiveActions';
 import RealtimeDataCard from '../components/RealtimeDataCard';
 import WhatIfAnalysis  from '../components/WhatIfAnalysis'
+import Concept from '../components/concept_dt'
 // import ScenarioModal from '../components/ScenarioModal';
 import title from '../assets/logo.png';
 import person1 from '../assets/person1.png'
@@ -356,6 +357,7 @@ const HandleNewPrediction = (newPrediction) => {
         <p>No hay datos disponibles.</p>
       )}
     </div>
+            <Concept />
             {/* <KPISelector selectedKPIs={selectedKPIs} setSelectedKPIs={setSelectedKPIs} /> */}
             <img src={person1} alt="person1" className="title-image" />
           </Col>

@@ -61,14 +61,14 @@ const DigitalTwinLanding = () => {
           > <Play className="icon hidden"/>
           Comenzar
           </button>
-
+{/* 
           <button className='bt' onClick={() => setShowModal(true)}>
           <RefreshCw className="icon hidden"/>
           Actualizar Dataset
-          </button>
-          {showModal
+          </button> */}
+          {/* {showModal
           ? <ImageSliderCSVUploader onCloseModal={handleCloseModal} />
-          : null}
+          : null} */}
 
       </div>
       </Card.Body>

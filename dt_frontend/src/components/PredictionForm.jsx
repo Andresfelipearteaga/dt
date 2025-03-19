@@ -18,8 +18,6 @@ const PredictionForm = ({ onPredict, newPrediction }) => {
     e.preventDefault();
     onPredict(age, gender, attendance, submitted, studyHours, studyHoursOnline);
     setDisabled(true)
-
-
   };
 
   const handleNewPrediction = () => {
@@ -32,10 +30,22 @@ const PredictionForm = ({ onPredict, newPrediction }) => {
     setAge('');
     setGender('');
   }
+
+  const style = `
+  input {
+    width: 50px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding-left: 5px;
+  
+  }
+  `
+
   
 
   return (
     <Form onSubmit={handleSubmit}>
+      <style>{style}</style>
       <Form.Group className="mb-3">
         <Form.Label>Edad</Form.Label>
         <Form.Control
@@ -76,7 +86,7 @@ const PredictionForm = ({ onPredict, newPrediction }) => {
         />
       </Form.Group>
       <Form.Group className="mb-3">
-        <Form.Label>Actividades enviadas de 20</Form.Label>
+        <Form.Label>Actividades enviadas de <input className='input' maxLength={50} type="number" /></Form.Label>
         <Form.Control
           type="number"
           value={submitted}
@@ -88,7 +98,7 @@ const PredictionForm = ({ onPredict, newPrediction }) => {
         />
       </Form.Group>
       <Form.Group className="mb-3">
-        <Form.Label>Horas de estudio extracurricular de 10</Form.Label>
+        <Form.Label>Horas de estudio extracurricular de <input className='input' maxLength={50} type="number" /></Form.Label>
         <Form.Control
           type="number"
           value={studyHours}
@@ -100,7 +110,7 @@ const PredictionForm = ({ onPredict, newPrediction }) => {
         />
       </Form.Group>
       <Form.Group className="mb-3">
-        <Form.Label>Horas de estudio con recursos online de 10</Form.Label>
+        <Form.Label>Horas de estudio con recursos online de <input className='input' maxLength={50} type="number" /></Form.Label>
         <Form.Control
           type="number"
           value={studyHoursOnline}
